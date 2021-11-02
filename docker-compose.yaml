@@ -1,0 +1,33 @@
+version: "3.3"
+
+services:
+  server:
+    image: cast
+    networks: [ipvlan]
+    entrypoint: [ "/home/srv" ]
+    
+  client:
+    image: cast
+    networks: [ipvlan]
+    entrypoint: [ "/home/cli" ]
+
+networks:
+  # macvlan:
+  #   driver: macvlan
+  #   driver_opts:
+  #     # 宿主机网卡
+  #     parent: eth0
+  #   ipam:
+  #     config:
+  #       - subnet: 172.20.192.0/24
+  #         gateway: 172.20.192.1
+  ipvlan:
+   driver: ipvlan
+   driver_opts:
+     ipvlan_mode: l2
+     # 宿主机网卡
+     parent: eth0
+   ipam:
+     config:
+       - subnet: 172.20.193.0/24
+         gateway: 172.20.193.1
